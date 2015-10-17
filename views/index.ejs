@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1-rc2/jquery.min.js"></script>
+     <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+     <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+
+	<!--Interactive Face-->
+
+
+<script src="http://code.createjs.com/easeljs-0.8.1.min.js"></script>
+<script src="http://code.createjs.com/tweenjs-0.6.1.min.js"></script>
+<script src="http://code.createjs.com/movieclip-0.8.1.min.js"></script>
+<script src="http://code.createjs.com/preloadjs-0.6.1.min.js"></script>
+<script src="azureAnimation.js"></script>
+
+<script>
+var canvas, stage, exportRoot;
+
+function init() {
+    canvas = document.getElementById("canvas");
+    images = images||{};
+    ss = ss||{};
+
+    var loader = new createjs.LoadQueue(false);
+    loader.addEventListener("fileload", handleFileLoad);
+    loader.addEventListener("complete", handleComplete);
+loader.loadFile({src:"images/azureAnimation_atlas_.json", type:"spritesheet", id:"azureAnimation_atlas_"}, true);
+    loader.loadManifest(lib.properties.manifest);
+}
+
+function handleFileLoad(evt) {
+    if (evt.item.type == "image") { images[evt.item.id] = evt.result; }
+}
+
+function handleComplete(evt) {
+    var queue = evt.target;
+    ss["azureAnimation_atlas_"] = queue.getResult("azureAnimation_atlas_");
+    exportRoot = new lib.azureAnimation();
+
+    stage = new createjs.Stage(canvas);
+    stage.addChild(exportRoot);
+    stage.update();
+
+    createjs.Ticker.setFPS(lib.properties.fps);
+    createjs.Ticker.addEventListener("tick", stage);
+}
+</script>
+
+
+    <!--/Interactive Face -->
+
+
+	<!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+        <link href="css/myCSS.css" rel="stylesheet">
+	    <title>Down Low'd Careers</title>
+        <meta name="author" content="Anil Jason" />
+        <meta name="description" content="The personal website dedicated to log my personal projects and hacks." />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0;">
+        <link rel="stylesheet" href="css/style.css" type="text/css" />
+    
+
+    <!-- Decouped HTML-->
+      <script> 
+        $(function(){
+          $("#includedContent").load("abilities.html"); 
+        });
+    </script> 
+     <!-- Decoupled HTML -->
+
+    </head>
+    <body onload="init();">
+    <main>
+	
+
+    <canvas id="canvas" width="300" height="180" ></canvas>
+    <img src="logos/amazon.png.png" id="job1" class="floater1">
+    <img src="logos/google.png.png" id="job2"  class="floater2">
+    <img src="logos/linkedin.png.png" id="job3"  class="floater3">
+    <img src="logos/pebble.png.png" id="job4"  class="floater4">
+
+
+<section>
+  <ul class="input-list style-1 clearfix">
+   
+      <input type="text" placeholder="Phone Number" id="PhoneNumber">
+    
+  </ul>
+</section>
+
+
+
+<div id="dialog" title="Basic dialog">
+</div>
+
+<!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#page-top" id="nameText">Down</a>
+                 <a class="navbar-brand" href="#page-top" id="nameTextBold">Low'd</a>
+				<a class="navbar-brand" href="#page-top" id="nameTextOrange">Careers</a>
+				
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+<section class="module parallax parallax-2" id="parallax">
+  <div class="containery">
+  <div align='center'>
+
+	 <div class="face_it">
+		<canvas id="notcanvas" width="600" height="1600"></canvas>
+	 </div>
+	
+
+	 </div>
+  </div>
+</section>
+
+
+
+
+<script src="js/demo.js"></script>
+<script src="f.js"></script>
+
+
+<script>
+   console.log("faeg");
+   var phone = document.getElementById("PhoneNumber");
+   var uploading = document.getElementById("canvas");
+   console.log(phone);
+
+   /*
+   phone.addEventListener("keydown",function(e){
+          console.log("fag");
+          phone.value = phone.value.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
+          //phone.value = "piss";
+   });
+    */
+    $('#PhoneNumber').keyup(function(e){
+        if(e.keyCode===13){
+            phone.style.opacity="0";
+            uploading.style.opacity="1";
+            setTimeout(function(){
+                uploading.style.opacity="0";
+                performHardCode();
+            },1000);
+        }
+        if(this.value.length>=10){
+            if(this.value >10){
+                this.value = this.value.substring(0,10);
+            }
+            return;
+        }
+    if ((e.keyCode > 47 && e.keyCode <58) || (e.keyCode < 106 && e.keyCode > 95))
+    {
+        this.value = this.value.replace(/(\d{3})\-?/g,'$1-');
+        return true;
+    }
+    this.value = this.value.replace(/[^\-0-9]/g,'');
+    //remove all chars, except dash and digits
+});
+
+
+function performHardCode(){
+   var job1 = document.getElementById("job1");
+   var job2 = document.getElementById("job2");
+   var job3 = document.getElementById("job3");
+   var job4 = document.getElementById("job4");
+   job1.style.opacity = 1;
+    job2.style.opacity = 1;
+     job3.style.opacity = 1;
+      job4.style.opacity = 1;
+}
+</script>
