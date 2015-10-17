@@ -1,4 +1,4 @@
-exports.deck = function() {
+function Deck() {
     this.cards = [];
     this.shuffle = function(){
       var cs = [];
@@ -21,3 +21,5 @@ exports.deck = function() {
       }
     }
 }
+
+module.exports = Deck;

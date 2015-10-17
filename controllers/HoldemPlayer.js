@@ -1,6 +1,7 @@
-exports.holdemplayer = function() {
+function HoldemPlayer(name) {
 	this.money = 5000;
 	this.cards = [];
-	this.name = "";
-	this.nonce = "";
-}
+	this.name = name;
+};
+
+module.exports = HoldemPlayer;
