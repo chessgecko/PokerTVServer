@@ -156,11 +156,6 @@ var deal_players = function(players, deck){
 	}
 }
 
-//still_used
-var deal_ret = function(deck, count){
-	return deck.deal(count);
-}
-
 var init_players_in_hand = function (players){
 	var temp = []
 	for(var i =0; i<players.length; i++){
