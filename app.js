@@ -1,14 +1,12 @@
 // Load required packages
 var express = require('express');
-var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
-var passport = require('passport');
+
 
 var request = require('request');
 var async = require('async');
 var parseString = require('xml2js').parseString;
 var fs = require('fs');
-var sql = require('mssql');
 
 var Main = require('./controllers/MainController')
 
@@ -28,8 +26,8 @@ var app = express();
 
 var http = require('http');
 
-var server = http.createServer(app).listen((process.env.PORT), function(){
-  console.log('Express server listening on port ' + (process.env.PORT));
+var server = http.createServer(app).listen(8080, function(){
+  //onsole.log('Express server listening on port ' + (process.env.PORT));
 });
 app.set("view engine", "ejs");
 
@@ -82,10 +80,4 @@ app.get('/', function(req, res){
 app.use('/', router);
 //var port = process.env.PORT || 80;
 // Start the server
-//app.listen(port);
-
-select p1.phone, p2.phone, 
-from Exchange, Persons p1, Persons p2
-where Exchange.phone1 = Exchange.phone2 and 
-Exchange.phone1 = p1.phone and Exchange.phone2 = p2.phone
-and p2.isRecruiter = 1;
+//app.listen(port)
