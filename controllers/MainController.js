@@ -1,5 +1,8 @@
+var Main = require('./Deck')
+
 var openSockets = [];
 var io;
+
 //this is to remind me how the data in the socket will look
 var sampleSocketData = {
 	"socket": "",
@@ -12,56 +15,23 @@ exports.connectIo = function(myIo){
 }
 
 exports.handleSocket = function(socket){
-	openSockets.push(
-		{
-			"socket":socket,
-			"data-added": 0,
-			"location": "",
-			"name": "",
-			"velocity": "",
-			"partner": null,
-			"data":null
-		}
-	);
-	console.log("connected");
+	
 	
 	socket.on('error', function(err){
 		console.log(err);
 	})
 	
-	socket.on('accelerationDetected', function(msg){
-		console.log("received acceleration: msg-v");
-		console.log(msg);
-		var testLoc = -1;
-		for(var i = 0; i<openSockets.length; i++){
-			if(openSockets[i]["socket"] == socket){
-				openSockets[i]["data"] = msg;
-				testLoc = i;
-				console.log("found socket")
-			}
-		}
-		console.log("testloc: " + testLoc);
-		if(testLoc == -1){
-			return;
-		}
-		for(var i = 0; i<openSockets.length; i++){
-			if(i == testLoc){
-				continue;
-			}
-			if(bumpedEachOther(openSockets[i]["data"], openSockets[testLoc]["data"])){
-				var person1 = openSockets[i];
-				var person2 = openSockets[testLoc];
-				person1["socket"].emit('matchFoundShouldUploadData', {});
-				person2["socket"].emit('matchFoundShouldUploadData', {});
-				openSockets[testLoc]["partner"] = person1;
-				openSockets[i]["partner"] = person2;
-				
-				
-				openSockets[testLoc]["data"] = null;
-				openSockets[i]["data"] = null;
-				console.log("match found");
-			}
-		}
+	socket.on('connectAndJoinGame', function(msg){
+		socket.emit('joinSuccess', 
+		{'gameID': 'GYXQ','playerName': 'name', 'playerNonce':'nonce' })
+	})
+	
+	socket.on('startGame', function(msg){
+		io.emit('gameStart', {});
+		io.emit('beginNewHand', {'bigBlindAmount': 10, 'smallBlindAmount': 10})
+		io.emit('playerState', {'money': 456, 'cards': [11, 51], 
+		"yourturn": true, "callAmountAbsolute": 50, "MaxRaiseAmountAbsolute": 200
+		});	
 	})
 	
 	socket.on('shareData', function(msg){

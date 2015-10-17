@@ -1,0 +1,62 @@
+
+[name] -> is a message from [name] to the server
+[name] <- is a message to [name] from the server
+<= is a message from the server to all connected clients in the room
+
+Beginning the game
+==================
+
+// Display
+display -> connect
+display <- {
+	"success": true,
+	"roomID": "GYXQ"
+}
+
+phone -> connectAndJoinGame {
+	"gameID": "GYXQ",
+	"playerName": "John Q. McFliggerbottom" // joining for the first time
+	**OR**
+	"playerNonce": gla;kdjsf84933j[qoirjwepoijearfo;iaewj" // rejoining after a disconnect
+}
+phone <- joinSuccess {
+	"playerNonce": "gjal;ksdfasdjffffasdfja;sdlkffffu84pwoueiru" // if joining for the first time. to be stored by client in case of disconnect.
+	**OR**
+	"playerName": "John Q. McFliggerbottom" // a playerState message will follow with all relevant state info
+}
+display <- playerDidJoinGame { // only if the player is joining for the first time
+	"playerName": "John Q. McFliggerbottom"
+}
+**OR**
+phone <- joinFailure {
+	"reason": "playerNameTaken" | "roomFull" | "unrecognizedNonce"
+}
+
+// after a few people join...
+display <- enableStartButton
+
+// repeat until everybody has joined
+display -> startGame
+<= gameStart
+
+phones <= beginNewHand {
+	"bigBlindAmount": 10,
+	"smallBlindAmount": 5,
+	"playerTokens": ["dealer", "smallBlind", "bigBlind"]
+}
+
+phones <= playerState {
+	"money": 456,
+	"cards": [ 11, 51 ], // int from 0..51
+	"yourTurn": true | false,
+	// if it's your turn...
+	"callAmountAbsolute": 50,
+	"maxRaiseAmountAbsolute": 200 // used if going over 200 would put somebody over all in
+}
+
+// To one when a player folds. To all when the round ends.
+phone <- endHand
+phone -> ackEndHand {
+	"revealHand": true | false
+}
+

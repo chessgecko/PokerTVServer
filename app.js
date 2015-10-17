@@ -10,7 +10,7 @@ var parseString = require('xml2js').parseString;
 var fs = require('fs');
 var sql = require('mssql');
 
-var bumpFunction = require('./controllers/bumpFunctionController')
+var Main = require('./controllers/MainController')
 
 //create our db connection
 var config = {
@@ -48,10 +48,10 @@ app.use(function (req, res, next) {
 
 var io = require('socket.io').listen(server);
 
-bumpFunction.connectIo(io);
+Main.connectIo(io);
 
 io.on('connection', function(socket){
-  bumpFunction.handleSocket(socket);
+  Main.handleSocket(socket);
 })
 
 io.on('error', function(socket, error){
