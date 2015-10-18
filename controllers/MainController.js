@@ -37,7 +37,7 @@ exports.handleSocket = function(socket){
 	})
 	
 	socket.on('connectAndJoinGame', function(msg){
-		
+		console.log('connectAndJoin');
 		for(var i = 0; i<rooms.length; i++){
 			if(rooms[i]["roomID"] == msg["gameID"]){
 				if(msg["playerName"]){
