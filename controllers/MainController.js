@@ -13,17 +13,19 @@ var sampleSocketData = {
 }
 
 exports.connectIo = function(myIo){
+	console.log('connecting to IO');
 	io = myIo;
 }
 
 exports.handleSocket = function(socket){
-	
+	console.log('handling Socket');
 	socket.on('error', function(err){
 		console.log(err);
 	});
 	
 	//display connects to server for the first time
 	socket.on('connect', function(msg){
+		console.log('in connect');
 		var id = makeid(4);
 		rooms.push({'roomID':id, 'players':[], 'socket':socket});
 		console.log(id);
