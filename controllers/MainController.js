@@ -26,6 +26,7 @@ exports.handleSocket = function(socket){
 	socket.on('connect', function(msg){
 		var id = makeid(4);
 		rooms.push({'roomID':id, 'players':[], 'socket':socket});
+		console.log(id);
 		socket.emit('joinSuccess', 
 		{
 			"success": true,
