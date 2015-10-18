@@ -295,15 +295,15 @@ function HoldemGame(players){
 		//reset all the bets
 		this.first_round = false;
 		
-		// for(var k = 0; k<this.round_bets.length; k++){
-		// 	if(this.round_bets[k] > 0){
-		// 		this.totalPot+=this.round_bets[k];
-		// 	}
-		// }
+		for(var k = 0; k<this.round_bets.length; k++){
+			if(this.round_bets[k] > 0){
+				this.totalPot+=this.round_bets[k];
+			}
+		}
 		//reset the counter
 		this.peoplePlayed = 0;
 		
-		//this.round_bets = this.init_round_bets();
+		this.round_bets = this.init_round_bets();
 		
 		//advance the round
 		return{
