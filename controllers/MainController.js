@@ -108,7 +108,7 @@ exports.handleSocket = function(socket){
 		console.log('starting game')
 		for(var i = 0; i<rooms.length; i++){
 			if(rooms[i]["socket"] == socket){
-				if(rooms[i]["players"].length > 2){
+				if(rooms[i]["players"].length > 1){
 					//initialize a new game and store it in the room
 					var game = new HoldemGame(rooms[i]["players"]);
 					console.log('beforeError');
