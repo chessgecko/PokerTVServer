@@ -3,9 +3,9 @@
 	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 	<script>
-  		var socket = io('104.236.59.44:8000');
+  		var socket = io('localhost:8000');
 		socket.emit('connect', {});
-		alert('hello world');
+
 		socket.on('joinSuccess', function(msg){
 			 $('#m').val(msg["roomID"]);
 			 alert(msg);

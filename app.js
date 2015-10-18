@@ -38,6 +38,7 @@ var io = require('socket.io').listen(server);
 Main.connectIo(io);
 
 io.on('connection', function(socket){
+  
   Main.handleSocket(socket);
 })
 
