@@ -149,8 +149,6 @@ exports.handleSocket = function(socket){
 						
 						var myEval = game.evaluate();
 						
-						
-						
 						console.log(myEval);
 						if(myEval["nextRound"]){
 							rooms[i]["socket"].emit("endRound", {});
@@ -161,9 +159,13 @@ exports.handleSocket = function(socket){
 						}
 						
 						if(myEval["over"]){
+							
+							
+							
 							rooms[i]["socket"].emit('endHand',{
-								"winner":myEval["winner"],
-								"finalTable":myEval["finalTable"]
+								"winner":game.players[myEval["winner"]].name,
+								"finalTable":myEval["finalTable"],
+								"players":game.players
 							});
 							
 							for(var k = 0; k<rooms[i]["players"].length; k++){
