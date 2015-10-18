@@ -10,23 +10,12 @@ var fs = require('fs');
 
 var Main = require('./controllers/MainController')
 
-//create our db connection
-var config = {
-  user:'downlowd',
-  password:'Bumpapp22',
-  server:"zre4az2wiu.database.windows.net,1433",
-  database:"downlowd db",
-  options:{
-    encrypt:true
-  }
-}
-
 // Create our Express application
 var app = express();
 
 var http = require('http');
 
-var server = http.createServer(app).listen(3000, function(){
+var server = http.createServer(app).listen(8000, function(){
   //onsole.log('Express server listening on port ' + (process.env.PORT));
 });
 app.set("view engine", "ejs");
@@ -62,7 +51,6 @@ var router = express.Router();
 
 
 app.use(express.static(__dirname + "/public"));
-console.log(__dirname + "/public");
 
 /*
 router.route('/').get(function(req, res){
