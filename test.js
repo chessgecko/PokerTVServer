@@ -5,11 +5,23 @@ var serverPlayers = [{'name':'name1'}, {'name': 'name2'}, {'name':'name3'}, {'na
 var testGame = new HoldemGame(serverPlayers);
 
 testGame.deal_hand();
-var action = testGame.getNextAction();
 var myAct = {
-	"total":1,
+	"total":10,
 	"fold":false
 };
-testGame.takeNextAction(myAct);
-testGame.evaluate();
+var myAct2 = {
+	"total":20,
+	"fold":false
+};
 
+
+for(var i = 0; i<5; i++){
+	console.log(testGame.getNextAction());
+	console.log(testGame.takeNextAction(myAct));
+	console.log(testGame.evaluate());
+}
+for(var i = 0; i<4; i++){
+	console.log(testGame.getNextAction());
+	console.log(testGame.takeNextAction(myAct2));
+	console.log(testGame.evaluate());
+}
