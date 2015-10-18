@@ -86,8 +86,10 @@ exports.handleSocket = function(socket){
 					var game = rooms[i]["game"];
 					//do one iteration here
 					var res = game.takeNextAction(msg);
+					console.log(res)
 					if(res["success"]){
 						var myEval = game.evaluate();
+						console.log(myEval);
 						if(myEval["nextRound"]){
 							
 						}
@@ -104,6 +106,7 @@ exports.handleSocket = function(socket){
 							updateAllPlayersForNewHand(rooms[i]);
 						}else {
 							var nextAction = game.getNextAction();
+							console.log(nextAction);
 							for(var k = 0; k< rooms[i]["players"].length; k++){
 								if(k == nextAction.playernum){
 									rooms[i]["players"][k]["socket"].emit('yourTurn', {
@@ -130,6 +133,7 @@ exports.handleSocket = function(socket){
 function updateAllPlayersForNewHand(room){
 	var game = room["game"];
 	var nextAction = game.getNextAction();
+	console.log(nextAction);
 	room["socket"].emit("updateTurn", {
 		"playerName":game.players[nextAction.playernum].name
 	});
