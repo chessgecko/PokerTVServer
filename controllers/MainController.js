@@ -143,10 +143,12 @@ exports.handleSocket = function(socket){
 					console.log(res)
 					if(res["success"]){
 						rooms[i]["socket"].emit('actionTaken', 
-						{"name": game.players[j]["name"],
-						"folded":msg["fold"], 
-						"total":msg["total"]
-						"money":game.players[j].money
+						{
+							"name": game.players[j]["name"],
+							"folded":msg["fold"], 
+							"total":msg["total"]- game.old_bets,
+							"money":game.players[j].money,
+							"pot":game.curPot()
 						});
 						
 						var myEval = game.evaluate();

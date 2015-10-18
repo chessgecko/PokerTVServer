@@ -17,6 +17,7 @@ function HoldemGame(players){
 	
 	//array of bets this round
 	this.round_bets = [];
+	this.old_bet = 0;
 	
 	//init the bets for the round
 	this.init_round_bets = function(){
@@ -113,6 +114,7 @@ function HoldemGame(players){
 		}
 		//test if the player bet is an all in
 		if(actionOb["total"] == this.round_bets[pn] + this.players[pn].money){
+			this.old_bet = Number(this.round_bets[pn]);
 			this.round_bets[pn] = actionOb["total"];
 			this.playersInHand[pn] = .5;
 			this.players[pn].money = 0;
@@ -136,6 +138,7 @@ function HoldemGame(players){
 			}
 		} else {
 			this.players[pn].money-=(Math.abs(actionOb["total"]) - this.round_bets[pn]);
+			this.old_bet = Number(this.round_bets[pn]);
 			this.round_bets[pn] = actionOb["total"];
 			return {
 				"success": true,
