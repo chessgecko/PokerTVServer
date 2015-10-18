@@ -5,8 +5,10 @@
 	<script>
   		var socket = io('104.236.59.44:8000');
 		socket.emit('connect', {});
+		alert('hello world');
 		socket.on('joinSuccess', function(msg){
 			 $('#m').val(msg["roomID"]);
+			 alert(msg);
 		})
 	</script>
 	<header>
