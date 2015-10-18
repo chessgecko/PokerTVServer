@@ -148,9 +148,7 @@ exports.handleSocket = function(socket){
 						"total":msg["total"]});
 						
 						var myEval = game.evaluate();
-						rooms[i]["socket"].emit("updateTurn", {
-							"playerName":game.players[nextAction.playernum].name
-						});
+						
 						
 						
 						console.log(myEval);
@@ -175,6 +173,9 @@ exports.handleSocket = function(socket){
 						}else {
 							var nextAction = game.getNextAction();
 							console.log(nextAction);
+							rooms[i]["socket"].emit("updateTurn", {
+								"playerName":game.players[nextAction.playernum].name
+							});
 							for(var k = 0; k< rooms[i]["players"].length; k++){
 								if(k == nextAction.playernum){
 									rooms[i]["players"][k]["socket"].emit('yourTurn', {
