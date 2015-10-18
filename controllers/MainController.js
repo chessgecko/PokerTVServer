@@ -120,7 +120,7 @@ exports.handleSocket = function(socket){
 						rooms[i]["players"][j]["socket"].emit("gameStart", {});
 					}
 					//get started and runs genNextAction
-					updateAllPlayersForNewHand();
+					updateAllPlayersForNewHand(rooms[i]);
 				}
 			}
 		}
