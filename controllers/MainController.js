@@ -119,6 +119,8 @@ exports.handleSocket = function(socket){
 					for(var j = 0; j< rooms[i]["players"].length; j++){
 						rooms[i]["players"][j]["socket"].emit("gameStart", {});
 					}
+					
+					rooms[i]["socket"].emit("players", {"players":game.players});
 					//get started and runs genNextAction
 					updateAllPlayersForNewHand(rooms[i]);
 				}
@@ -137,10 +139,17 @@ exports.handleSocket = function(socket){
 					var res = game.takeNextAction(msg);
 					console.log(res)
 					if(res["success"]){
+						rooms[i]["socket"].emit('actionTaken', 
+						{"name": game.players[j]["name"],
+						"folded":msg["fold"], 
+						"total":msg["total"]});
 						var myEval = game.evaluate();
+						
+						
+						
 						console.log(myEval);
 						if(myEval["nextRound"]){
-							
+							rooms[i]["socket"].emit("endRound", {});
 						}
 						
 						if(myEval["over"]){
