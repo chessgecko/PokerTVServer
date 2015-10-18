@@ -6,22 +6,22 @@ var testGame = new HoldemGame(serverPlayers);
 
 testGame.deal_hand();
 var myAct = {
-	"total":10,
+	"total":5000,
 	"fold":false
 };
 var myAct2 = {
-	"total":20,
+	"total":0,
 	"fold":false
 };
 
 
-for(var i = 0; i<5; i++){
+for(var i = 0; i<4; i++){
 	console.log(testGame.getNextAction());
 	console.log(testGame.takeNextAction(myAct));
 	console.log(testGame.evaluate());
 }
-for(var i = 0; i<4; i++){
-	console.log(testGame.getNextAction());
-	console.log(testGame.takeNextAction(myAct2));
-	console.log(testGame.evaluate());
-}
+// for(var i = 0; i<12; i++){
+// 	console.log(testGame.getNextAction());
+// 	console.log(testGame.takeNextAction(myAct2));
+// 	console.log(testGame.evaluate());
+// }

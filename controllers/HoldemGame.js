@@ -79,6 +79,7 @@ function HoldemGame(players){
 		ret["playernum"] = this.getCurrentPlayerNum();
 		ret["minBet"] = this.minBet();
 		ret["maxBet"] = 100;
+		ret["money"] = this.players[ret["playernum"]].money;
 		return ret;
 	}
 	
@@ -91,6 +92,9 @@ function HoldemGame(players){
 	this.takeNextAction = function(actionOb){
 		var pn =this.getCurrentPlayerNum();
 		//test if the player folds
+		if(this.round_bets[pn] < 0){
+			this.round_bets[pn] = 0;
+		}
 		if(actionOb.fold){
 			this.playersInHand[pn] = 0;
 			return {
@@ -122,9 +126,6 @@ function HoldemGame(players){
 				"message":"did not bet high enough"
 			}
 		} else {
-			if(this.round_bets[pn] < 0){
-				this.round_bets[pn] = 0;
-			}
 			this.players[pn].money-=(Math.abs(actionOb["total"]) - this.round_bets[pn]);
 			this.round_bets[pn] = actionOb["total"];
 			return {
@@ -164,6 +165,7 @@ function HoldemGame(players){
 		var validPlayers = [];
 		for(var i = 0; i<this.playersInHand.length; i++){
 			if(this.playersInHand[i] > 0){
+				console.log(this.players[i]);
 				validPlayers.push(this.players[i]);
 			}
 		}
@@ -179,7 +181,7 @@ function HoldemGame(players){
 			return ["error should never reach here"];
 		}
 		
-		var temp = compareWin(validPlayers[0], validPlayers[1], table);
+		var temp = compareWin(validPlayers[0].cards, validPlayers[1].cards, table);
 		if(temp == 0){
 			currentWinners.concat([validPlayers[0], validPlayers[1]]);
 		}else if(temp == 1){
@@ -189,7 +191,7 @@ function HoldemGame(players){
 		}
 		
 		for(var i = 2; i<validPlayers.length; i++){
-			temp = compareWin(currentWinners[currentWinners.length-1], validPlayers[i], table);
+			temp = compareWin(currentWinners[currentWinners.length-1].cards, validPlayers[i].cards, table);
 			if(temp == 0){
 				currentWinners.push(validPlayers[i]);
 			}
@@ -244,7 +246,15 @@ function HoldemGame(players){
 		//determine who wins and assign them the pot/splitting if needed
 		//set up the next hand
 		if(this.handOver()){
-			
+			//deal the rest of the game
+			if(this.table.length < 5){
+
+				var temp = this.deck.deal(5-this.table.length);
+				console.log(temp);
+				this.table = this.table.concat(temp);
+			}
+			var finalTable = this.table.slice(0);
+
 			//determine who won the game
 			var winnerArray = this.findWinner();
 			for(var k = 0; k<this.round_bets.length; k++){
@@ -270,7 +280,8 @@ function HoldemGame(players){
 			return{
 				"nextRound": true,
 				"over":true,
-				"winner":winnerArray
+				"winner":winnerArray,
+				"finalTable":finalTable
 			}
 		}
 		
@@ -319,7 +330,7 @@ var deal_players = function(players, deck){
 }
 
 var init_players_in_hand = function (players){
-	var temp = []
+	var temp = [];
 	for(var i =0; i<players.length; i++){
 		temp.push(1);
 	}

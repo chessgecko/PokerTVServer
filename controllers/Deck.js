@@ -19,6 +19,7 @@ function Deck() {
         ret.push(this.cards.pop());
         numCards--;
       }
+      return ret;
     }
 }
 

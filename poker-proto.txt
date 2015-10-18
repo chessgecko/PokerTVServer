@@ -49,9 +49,27 @@ phones <= playerState {
 	"money": 456,
 	"cards": [ 11, 51 ], // int from 0..51
 	"yourTurn": true | false,
-	// if it's your turn...
+}
+
+phones <= yourTurn {
+	“money”: 405,
 	"callAmountAbsolute": 50,
 	"maxRaiseAmountAbsolute": 200 // used if going over 200 would put somebody over all in
+
+}
+
+phones => sendMove {
+	“fold”:false,
+	“total”:15
+}
+
+display <= updateTurn {
+	“playerName”: “name”
+}
+
+display <= updateBet {
+	“playerName”: “name”,
+	“bet”:10
 }
 
 // To one when a player folds. To all when the round ends.
