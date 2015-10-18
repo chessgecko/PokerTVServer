@@ -295,11 +295,11 @@ function HoldemGame(players){
 		//reset all the bets
 		this.first_round = false;
 		
-		for(var k = 0; k<this.round_bets.length; k++){
-			if(this.round_bets[k] > 0){
-				this.totalPot+=this.round_bets[k];
-			}
-		}
+		// for(var k = 0; k<this.round_bets.length; k++){
+		// 	if(this.round_bets[k] > 0){
+		// 		this.totalPot+=this.round_bets[k];
+		// 	}
+		// }
 		//reset the counter
 		this.peoplePlayed = 0;
 		
@@ -338,19 +338,213 @@ var init_players_in_hand = function (players){
 }
 
 var compareWin = function(player1, player2, table){
-		var sum1 = 0;
-		var sum2 = 0;
-		for(var i = 0; i< player1.length; i++){
-			sum1+=player1[i];
-			sum2+=player2[i];
-		}
-		
-		if(sum1 == sum2)
-			return 0;
-		if(sum1 > sum2)
-			return 1;
-		
-		return 2;
+
+	var c4 = checkForFourOfAKind(player1, player2, table);
+	if(c4 != 0)
+		return c4;
+	
+	var s = checkForStraight(player1, player2, table);
+	if(s!=0){
+		return s;
 	}
+	var c3 = checkForThreeOfAKind(player1, player2, table);
+	if(c3 != 0)
+		return c3;
+		
+	var c2 = checkForPair(player1, player2, table);
+	if(c2 != 0)
+		return c2;
+	
+	var p1c = Math.max(player1[0], player1[1]);
+	var p2c = Math.max(player2[0], player2[1]);
+	if(p1c > p2c)
+		return 1;
+	if(p2c > p1c)
+		return 2;
+	return 0;
+}
+
+var checkForStraightFlush = function(player1, player2, table){
+	var p1All = player1.concat(table);
+	var p2All = player2.concat(table);
+}
+
+var checkForFourOfAKind = function(player1, player2, table){
+	var p1 = player1.concat(table).sort(sortNumber);
+	var p2 = player2.concat(table).sort(sortNumber);
+	
+	var p1ret = -1;
+	var p2ret = -1;
+	
+	for(var i = 0; i< p1.length-3; i++){
+		var count = 1;
+		for(var j = i+1; j<p1.length; j++){
+			if(p1[i]%13 == p1[j]%13){
+				count++;
+			}
+		}
+		if(count == 4){
+			p1ret = p1[i]%13
+		}
+	}
+	
+	for(var i = 0; i< p2.length-3; i++){
+		var count = 1;
+		for(var j = i+1; j<p2.length; j++){
+			if(p2[i]%13 == p2[j]%13){
+				count++;
+			}
+		}
+		if(count == 4){
+			p2ret = p2[i]%13
+		}
+	}
+	if(p1ret > p2ret){
+		return 1;
+	} else if(p2ret > p1ret){
+		return 2;
+	} else {
+		return 0;
+	}
+}
+
+var checkForStraight = function(player1, player2, table){
+	var p1 = player1.concat(table).sort(sortNumber2);
+	var p2 = player2.concat(table).sort(sortNumber2);
+	
+	var p1ret = -1;
+	var p2ret = -1;
+	
+	for(var i = 0; i< p1.length-4; i++){
+		var count = 1;
+		var prev = p1[i];
+		for(var j = i+1; j<i+5; j++){
+			if(prev +1 == p1[j]%13){
+				count++;
+			}else if(prev == p1[j]%13){
+				
+			} else {
+				break;
+			}
+		}
+		if(count == 5){
+			p1ret = p1[i]%13;
+		}
+	}
+	
+	for(var i = 0; i< p2.length-4; i++){
+		var count = 1;
+		var prev = p2[i];
+		for(var j = i+1; j<i+5; j++){
+			if(prev +1 == p2[j]%13){
+				count++;
+			}else if(prev == p2[j]%13){
+				
+			} else {
+				break;
+			}
+		}
+		if(count == 5){
+			p2ret = p2[i]%13;
+		}
+	}
+	
+	if(p1ret > p2ret){
+		return 1;
+	} else if(p2ret > p1ret){
+		return 2;
+	} else {
+		return 0;
+	}
+}
+
+
+var checkForThreeOfAKind = function(player1, player2, table){
+	var p1 = player1.concat(table).sort(sortNumber);
+	var p2 = player2.concat(table).sort(sortNumber);
+	
+	var p1ret = -1;
+	var p2ret = -1;
+	
+	for(var i = 0; i< p1.length-2; i++){
+		var count = 1;
+		for(var j = i+1; j<p1.length; j++){
+			if(p1[i]%13 == p1[j]%13){
+				count++;
+			}
+		}
+		if(count == 3){
+			p1ret = p1[i]%13
+		}
+	}
+	
+	for(var i = 0; i< p2.length-2; i++){
+		var count = 1;
+		for(var j = i+1; j<p2.length; j++){
+			if(p2[i]%13 == p2[j]%13){
+				count++;
+			}
+		}
+		if(count == 3){
+			p2ret = p2[i]%13
+		}
+	}
+	if(p1ret > p2ret){
+		return 1;
+	} else if(p2ret > p1ret){
+		return 2;
+	} else {
+		return 0;
+	}
+}
+
+var checkForPair = function(player1, player2, table){
+	var p1 = player1.concat(table).sort(sortNumber);
+	var p2 = player2.concat(table).sort(sortNumber);
+	
+	var p1ret = -1;
+	var p2ret = -1;
+	
+	for(var i = 0; i< p1.length-1; i++){
+		var count = 1;
+		for(var j = i+1; j<p1.length; j++){
+			if(p1[i]%13 == p1[j]%13){
+				count++;
+			}
+		}
+		if(count == 2){
+			p1ret = p1[i]%13
+		}
+	}
+	
+	for(var i = 0; i< p2.length-1; i++){
+		var count = 1;
+		for(var j = i+1; j<p2.length; j++){
+			if(p2[i]%13 == p2[j]%13){
+				count++;
+			}
+		}
+		if(count == 2){
+			p2ret = p2[i]%13
+		}
+	}
+	
+	if(p1ret > p2ret){
+		return 1;
+	} else if(p2ret > p1ret){
+		return 2;
+	} else {
+		return 0;
+	}
+}
+
+function sortNumber(a,b) {
+    return a - b;
+}
+
+function sortNumber2(a,b) {
+    return a%13 - b%13;
+}
+
 
 module.exports = HoldemGame;
