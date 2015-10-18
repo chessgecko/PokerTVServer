@@ -155,6 +155,9 @@ exports.handleSocket = function(socket){
 						if(myEval["nextRound"]){
 							rooms[i]["socket"].emit("endRound", {});
 							rooms[i]["socket"].emit("table", {"table": game.table});
+							for(var k = 0; k<rooms[i]["players"].length; k++){
+								rooms[i]["players"][k]["socket"].emit('endRound', {});
+							}
 						}
 						
 						if(myEval["over"]){

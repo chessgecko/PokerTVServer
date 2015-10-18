@@ -138,8 +138,9 @@ function HoldemGame(players){
 	//determine if the hand is over given that the round is over
 	//the conditions are 1: 5 cards on the table 2: everyone but one folded or all in
 	this.handOver = function(){
-		
+		console.log(this.table);
 		if(this.table.length == 5){
+			console.log("table=5");
 			return true;
 		}
 		var count = 0;
@@ -287,9 +288,9 @@ function HoldemGame(players){
 		
 		//put the next card on the table
 		if(this.table.length == 0){
-			this.table.concat(this.deck.deal(3));
+			this.table = this.table.concat(this.deck.deal(3));
 		}else{
-			this.table.concat(this.deck.deal(1));
+			this.table = this.table.concat(this.deck.deal(1));
 		}
 		
 		//reset all the bets
