@@ -303,7 +303,7 @@ function HoldemGame(players){
 		//reset the counter
 		this.peoplePlayed = 0;
 		
-		this.round_bets = this.init_round_bets();
+		//this.round_bets = this.init_round_bets();
 		
 		//advance the round
 		return{
