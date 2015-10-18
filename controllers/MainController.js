@@ -105,12 +105,13 @@ exports.handleSocket = function(socket){
 	})
 	
 	socket.on('startGame', function(msg){
-		
+		console.log('starting game')
 		for(var i = 0; i<rooms.length; i++){
 			if(rooms[i]["socket"] == socket){
 				if(rooms[i]["players"].length > 2){
 					//initialize a new game and store it in the room
 					var game = new HoldemGame(rooms[i]["players"]);
+					console.log('beforeError');
 					rooms[i]["game"] = game;
 					game.deal_hand();
 					rooms[i]["socket"].emit("gameStart", {});
@@ -126,7 +127,7 @@ exports.handleSocket = function(socket){
 	});
 	
 	socket.on('sendMove', function(msg){
-		
+		console.log('in sendMove');
 		for(var i = 0; i<rooms.length; i++){
 			for(var j = 0; j<rooms[i]["players"].length; j++){
 				if(socket == rooms[i]["players"][j]["socket"]){
