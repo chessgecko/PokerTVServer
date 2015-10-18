@@ -169,6 +169,7 @@ exports.handleSocket = function(socket){
 							for(var k = 0; k<rooms[i]["players"].length; k++){
 								rooms[i]["players"][k]["socket"].emit('endHand', {});
 							}
+							console.log(rooms[i]["players"]);
 							updateAllPlayersForNewHand(rooms[i]);
 						}else {
 							var nextAction = game.getNextAction();
