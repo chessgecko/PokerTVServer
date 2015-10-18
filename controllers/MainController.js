@@ -136,6 +136,7 @@ exports.handleSocket = function(socket){
 			for(var j = 0; j<rooms[i]["players"].length; j++){
 				if(socket == rooms[i]["players"][j]["socket"]){
 					//deal with it here
+					console.log(msg);
 					var game = rooms[i]["game"];
 					//do one iteration here
 					var res = game.takeNextAction(msg);
@@ -145,6 +146,7 @@ exports.handleSocket = function(socket){
 						{"name": game.players[j]["name"],
 						"folded":msg["fold"], 
 						"total":msg["total"]});
+						
 						var myEval = game.evaluate();
 						
 						
@@ -152,6 +154,7 @@ exports.handleSocket = function(socket){
 						console.log(myEval);
 						if(myEval["nextRound"]){
 							rooms[i]["socket"].emit("endRound", {});
+							rooms[i]["socket"].emit("table", {"table": game.table});
 						}
 						
 						if(myEval["over"]){

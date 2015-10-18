@@ -233,7 +233,7 @@ function HoldemGame(players){
 			
 		}
 		//check for case where this fails
-		if(this.first_round && minbet == this.bigcost && prevPN == (this.dealer + 1)%(this.players.length)){
+		if(this.first_round && minbet == this.bigcost && this.peoplePlayed < this.players.length){
 			this.peoplePlayed++;
 			return {
 					"nextRound": false,
