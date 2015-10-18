@@ -146,7 +146,7 @@ exports.handleSocket = function(socket){
 						{
 							"name": game.players[j]["name"],
 							"folded":msg["fold"], 
-							"total":msg["total"]- game.old_bets,
+							"total":msg["total"]- game.old_bet,
 							"money":game.players[j].money,
 							"pot":game.curPot()
 						});
