@@ -41,6 +41,15 @@ function HoldemGame(players){
 		deal_players(this.players, this.deck);
 	}
 	
+	this.curPot = function(){
+		var temp = this.totalPot;
+		for(var i = 0; i<this.round_bets.length; i++){
+			if(this.round_bets[i] > 0)
+				temp+=this.round_bets[i];
+		}
+		return temp;
+	}
+	
 	//dealer
 	//
 	//

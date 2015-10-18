@@ -145,7 +145,9 @@ exports.handleSocket = function(socket){
 						rooms[i]["socket"].emit('actionTaken', 
 						{"name": game.players[j]["name"],
 						"folded":msg["fold"], 
-						"total":msg["total"]});
+						"total":msg["total"]
+						"money":game.players[j].money
+						});
 						
 						var myEval = game.evaluate();
 						
@@ -159,9 +161,6 @@ exports.handleSocket = function(socket){
 						}
 						
 						if(myEval["over"]){
-							
-							
-							
 							rooms[i]["socket"].emit('endHand',{
 								"winner":game.players[myEval["winner"]].name,
 								"finalTable":myEval["finalTable"],
