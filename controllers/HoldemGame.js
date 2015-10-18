@@ -234,11 +234,11 @@ function HoldemGame(players){
 			
 		}
 		//check for case where this fails
-		if(this.first_round && minbet == this.bigcost && this.peoplePlayed < this.players.length){
+		if(this.first_round && minbet == this.bigcost && this.peoplePlayed < this.players.length-1){
 			this.peoplePlayed++;
 			return {
-					"nextRound": false,
-					"over":false
+				"nextRound": false,
+				"over":false
 			}	
 		}
 		

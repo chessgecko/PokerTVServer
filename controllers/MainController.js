@@ -148,7 +148,9 @@ exports.handleSocket = function(socket){
 						"total":msg["total"]});
 						
 						var myEval = game.evaluate();
-						
+						rooms[i]["socket"].emit("updateTurn", {
+							"playerName":game.players[nextAction.playernum].name
+						});
 						
 						
 						console.log(myEval);
