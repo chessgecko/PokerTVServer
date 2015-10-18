@@ -40,7 +40,7 @@ function updateAllPlayersForNewHand(room){
 function makeid(len)
 {
     var text = "";
-    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     for( var i=0; i < len; i++ )
         text += possible.charAt(Math.floor(Math.random() * possible.length));
@@ -108,10 +108,12 @@ exports.handleSocket = function(socket){
 		console.log('starting game')
 		for(var i = 0; i<rooms.length; i++){
 			if(rooms[i]["socket"] == socket){
+				console.log("found socket");
 				if(rooms[i]["players"].length > 1){
+					console.log('found players');
 					//initialize a new game and store it in the room
 					var game = new HoldemGame(rooms[i]["players"]);
-					console.log('beforeError');
+
 					rooms[i]["game"] = game;
 					game.deal_hand();
 					rooms[i]["socket"].emit("gameStart", {});
